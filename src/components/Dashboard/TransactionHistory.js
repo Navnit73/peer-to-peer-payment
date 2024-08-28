@@ -1,6 +1,7 @@
 // src/components/Dashboard/TransactionHistory.js
 import React from "react";
 import styled from "styled-components";
+import MainContent from "../Layout/MainContent";
 
 const HistoryWrapper = styled.div`
   background-color: #fff;
@@ -44,6 +45,7 @@ const TransactionHistory = () => {
   ];
 
   return (
+    <MainContent>
     <HistoryWrapper>
       <Title>Transaction History</Title>
       {transactions.map((transaction) => (
@@ -53,6 +55,7 @@ const TransactionHistory = () => {
         </TransactionItem>
       ))}
     </HistoryWrapper>
+    </MainContent>
   );
 };
 

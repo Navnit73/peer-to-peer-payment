@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import TransferMoney from "./TransferMoney";
 import TransactionHistory from "./TransactionHistory";
-
+import MainContent from "../Layout/MainContent";
 const DashboardWrapper = styled.div`
   padding: 40px;
   max-width: 1200px;
@@ -27,12 +27,14 @@ const Title = styled.h1`
 
 const Dashboard = () => {
   return (
+    <MainContent>
     <DashboardWrapper>
       <Title>Dashboard</Title>
       <BalanceBox>Your Balance: $5,000.00</BalanceBox>
       <TransferMoney />
       <TransactionHistory />
     </DashboardWrapper>
+    </MainContent>
   );
 };
 
