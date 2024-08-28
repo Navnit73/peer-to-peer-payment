@@ -16,7 +16,7 @@ const SidebarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 0.3s ease;
+  transition: width 0.3s ease, opacity 0.3s ease;
 
   @media (max-width: 768px) {
     width: 60px;

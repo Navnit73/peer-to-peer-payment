@@ -2,81 +2,129 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const ProfileWrapper = styled.div`
-  margin-left: 270px;
-  padding: 40px;
+const UserProfileWrapper = styled.div`
+  padding: 20px;
   max-width: 600px;
-
-  @media (max-width: 768px) {
-    margin-left: 70px;
-    padding: 20px;
-  }
+  margin: 0 auto;
 `;
 
-const Title = styled.h1`
-  margin-bottom: 20px;
-  color: ${(props) => props.theme.colors.text};
-`;
-
-const Form = styled.form`
+const ProfilePicContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
-const Input = styled.input`
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-`;
+const ProfilePic = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20px;
 
-const Button = styled.button`
-  padding: 10px;
-  background-color: ${(props) => props.theme.colors.primary};
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.secondary};
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
-const UserProfile = () => {
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("john.doe@example.com");
+const InputGroup = styled.div`
+  margin-bottom: 15px;
 
-  const handleUpdate = (e) => {
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+`;
+
+const UserProfile = ({ setProfilePic, currentProfilePic }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const handleProfileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const newProfilePic = URL.createObjectURL(file);
+      setProfilePic(newProfilePic);
+    }
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle profile update logic here
-    alert("Profile updated successfully!");
+    console.log({ name, email, address, phone });
   };
 
   return (
-    <ProfileWrapper>
-      <Title>User Profile</Title>
-      <Form onSubmit={handleUpdate}>
-        <Input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
-          required
+    <UserProfileWrapper>
+      <h2>Update Profile</h2>
+      <ProfilePicContainer>
+        <ProfilePic>
+          <img src={currentProfilePic || "default-profile-pic.png"} alt="Profile" />
+        </ProfilePic>
+        <input
+          type="file"
+          accept="image/*"
+          id="profile-upload"
+          onChange={handleProfileUpload}
         />
-        <Input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <Button type="submit">Update Profile</Button>
-      </Form>
-    </ProfileWrapper>
+        <label htmlFor="profile-upload">
+          <button>Change Profile Picture</button>
+        </label>
+      </ProfilePicContainer>
+      <form onSubmit={handleSubmit}>
+        <InputGroup>
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your name"
+          />
+        </InputGroup>
+        <InputGroup>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+          />
+        </InputGroup>
+        <InputGroup>
+          <label htmlFor="address">Address</label>
+          <input
+            type="text"
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Enter your address"
+          />
+        </InputGroup>
+        <InputGroup>
+          <label htmlFor="phone">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter your phone number"
+          />
+        </InputGroup>
+        <button type="submit">Save Changes</button>
+      </form>
+    </UserProfileWrapper>
   );
 };
 
